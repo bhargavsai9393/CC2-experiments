@@ -1,0 +1,81 @@
+EXPERIMENT 2.1-SEARCH INSERTION POSITION(LEETCODE-35)
+
+Aim:
+To find the index of a target element in a sorted array using Binary Search. If the target is not present, return the index where it should be inserted to maintain
+the sorted order.
+
+Algorithm:
+1.Initialize start = 0, end = n - 1, and pos = -1.
+2.Perform Binary Search:
+  Find the middle index mid.
+3.If pos != -1, return pos.
+4.Otherwise, use upper_bound() to find the insertion position and return that index.
+5.End.
+
+Code:
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int pos = -1;
+        int start = 0, end = nums.size() - 1;
+
+        while (start <= end) {
+            int mid = (start + end) / 2;
+
+            if (nums[mid] < target) {
+                start = mid + 1;
+            }
+            else if (nums[mid] > target) {
+                end = mid - 1;
+            }
+            else {
+                pos = mid;
+                break;
+            }
+        }
+
+        if (pos == -1) {
+            int pos1 = upper_bound(nums.begin(), nums.end(), target) - nums.begin();
+            return pos1;
+        }
+
+        return pos;
+    }
+};
+
+EXPERIMENT 2.2 -FIND FIRST AND LAST POSITION OF ELEMENT IN THE SORTED ARRAY(LEETCODE-34)
+
+Aim:
+To find the first and last occurrence of a target element in a sorted array. If the target is not present, return [-1, -1].
+
+Algorithm:
+1.Initialize the answer vector as [-1, -1].
+2.Use lower_bound() to find the first position where the target can appear.
+3.If the returned index is equal to the array size or the element at that index is not the target, return [-1, -1].
+4.Use upper_bound() to find the position just after the last occurrence of the target.
+5.Set:
+6.Return the answer vector.
+
+CODE:
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int pos1 = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
+        cout << pos1 << "hello" << endl;
+
+        vector<int> ans = {-1, -1};
+
+        if (pos1 == nums.size())
+            return ans;
+
+        if (nums[pos1] != target)
+            return ans;
+
+        int pos2 = upper_bound(nums.begin(), nums.end(), target) - nums.begin();
+
+        ans[0] = pos1;
+        ans[1] = pos2 - 1;
+
+        return ans;
+    }
+};
